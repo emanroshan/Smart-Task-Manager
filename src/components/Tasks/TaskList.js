@@ -8,7 +8,7 @@ function TaskList({ tasks, onDelete, onToggle, onUpdate }) {
   const [sortConfig, setSortConfig] = useState({ key: null, direction: "asc" });
 
   const startEdit = (task) => {
-    setEditingId(task.id);
+    setEditingId(task._id);   
     setEditTitle(task.title);
     setEditDeadline(task.deadline || "");
   };
@@ -47,43 +47,41 @@ function TaskList({ tasks, onDelete, onToggle, onUpdate }) {
     return <p>No tasks to display.</p>;
   }
 
- let sortedTasks = [...tasks];
+  let sortedTasks = [...tasks];
 
-const getPriority = (task) => {
-  if (task.completed) return 3;
+  const getPriority = (task) => {
+    if (task.completed) return 3;
 
-  const status = getDeadlineStatus(task.deadline);
-  if (status === "Due Soon") return 0;
-  if (status === "Overdue") return 2;
-  return 1;
-};
+    const status = getDeadlineStatus(task.deadline);
+    if (status === "Due Soon") return 0;
+    if (status === "Overdue") return 2;
+    return 1;
+  };
 
-sortedTasks.sort((a, b) => {
-  const prioA = getPriority(a);
-  const prioB = getPriority(b);
-  if (prioA !== prioB) return prioA - prioB;
+  sortedTasks.sort((a, b) => {
+    const prioA = getPriority(a);
+    const prioB = getPriority(b);
+    if (prioA !== prioB) return prioA - prioB;
 
- 
-  if (sortConfig.key) {
-    let aValue = a[sortConfig.key];
-    let bValue = b[sortConfig.key];
+    if (sortConfig.key) {
+      let aValue = a[sortConfig.key];
+      let bValue = b[sortConfig.key];
 
-    if (sortConfig.key === "deadline") {
-      aValue = aValue ? new Date(aValue) : new Date(0);
-      bValue = bValue ? new Date(bValue) : new Date(0);
+      if (sortConfig.key === "deadline") {
+        aValue = aValue ? new Date(aValue) : new Date(0);
+        bValue = bValue ? new Date(bValue) : new Date(0);
+      }
+
+      if (typeof aValue === "string") aValue = aValue.toLowerCase();
+      if (typeof bValue === "string") bValue = bValue.toLowerCase();
+
+      if (aValue < bValue) return sortConfig.direction === "asc" ? -1 : 1;
+      if (aValue > bValue) return sortConfig.direction === "asc" ? 1 : -1;
     }
 
-    if (typeof aValue === "string") aValue = aValue.toLowerCase();
-    if (typeof bValue === "string") bValue = bValue.toLowerCase();
+    return 0;
+  });
 
-    if (aValue < bValue) return sortConfig.direction === "asc" ? -1 : 1;
-    if (aValue > bValue) return sortConfig.direction === "asc" ? 1 : -1;
-  }
-
-  return 0;
-});
-
-  
   return (
     <div className="table-container">
       <table className="task-table">
@@ -124,9 +122,9 @@ sortedTasks.sort((a, b) => {
             const rowClass = task.completed || isOverdue ? "completed-row" : "";
 
             return (
-              <tr key={task.id} className={rowClass}>
-                <td>
-                  {editingId === task.id ? (
+              <tr key={task._id}> {/* ✅ changed id -> _id */}
+      <td className={task.completed ? "strikethrough" : ""}>
+                  {editingId === task._id ? (   /* ✅ changed id -> _id */
                     <input
                       value={editTitle}
                       onChange={(e) => setEditTitle(e.target.value)}
@@ -136,7 +134,7 @@ sortedTasks.sort((a, b) => {
                   )}
                 </td>
                 <td>
-                  {editingId === task.id ? (
+                  {editingId === task._id ? (  /* ✅ changed id -> _id */
                     <input
                       type="date"
                       value={editDeadline}
@@ -167,7 +165,7 @@ sortedTasks.sort((a, b) => {
                       checked={task.completed}
                       onChange={() => {
                         if (!task.completed) {
-                          onToggle(task.id);
+                          onToggle(task._id);  /* ✅ changed id -> _id */
                         }
                       }}
                       disabled={task.completed}
@@ -179,7 +177,7 @@ sortedTasks.sort((a, b) => {
                   </span>
                 </td>
                 <td>
-                  {editingId === task.id ? (
+                  {editingId === task._id ? (  /* ✅ changed id -> _id */
                     <>
                       <button onClick={() => saveEdit(task)}>Save</button>
                       <button onClick={() => setEditingId(null)}>Cancel</button>
@@ -187,7 +185,7 @@ sortedTasks.sort((a, b) => {
                   ) : (
                     <>
                       <button onClick={() => startEdit(task)}>Edit</button>
-                      <button onClick={() => onDelete(task.id)}>Delete</button>
+                      <button onClick={() => onDelete(task._id)}>Delete</button> {/* ✅ changed id -> _id */}
                     </>
                   )}
                 </td>

@@ -1,22 +1,21 @@
 import React, { useState } from "react";
-import { v4 as uuidv4 } from "uuid";
 
 function TaskForm({ addTask }) {
   const [title, setTitle] = useState("");
   const [category, setCategory] = useState("Work");
   const [deadline, setDeadline] = useState("");
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
+
     const task = {
-      id: uuidv4(),
       title,
       category,
       deadline,
-      completed: false,
-      status: "Incomplete", // ✅ Added status field
     };
-    addTask(task);
+
+    await addTask(task);
+
     setTitle("");
     setDeadline("");
     setCategory("Work");

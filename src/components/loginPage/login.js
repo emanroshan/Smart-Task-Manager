@@ -8,31 +8,27 @@ function LoginPage({ onLogin }) {
   const [password, setPassword] = useState("");
   const navigate = useNavigate();
 
-  const handleSubmit = async (e) => {
-    e.preventDefault();
-try {
-  const res = await axios.post("http://localhost:5000/api/auth/login", {
-    email,
-    password,
-  });
-  
-  console.log("Response data:", res.data);
-  
-const { token, name } = res.data;
-localStorage.setItem("token", token);
-localStorage.setItem("name", name);
+const handleSubmit = async (e) => {
+  e.preventDefault();
+  try {
+    const res = await axios.post("http://localhost:5000/api/auth/login", {
+      email,
+      password,
+    });
 
-  console.log("Name saved:", name);
+    const { token, username } = res.data;
 
-  alert("Login successful!");
-  onLogin();
-  navigate("/");
-} catch (err) {
-  console.error(err);
-  alert(err.response?.data?.message || "Login failed.");
-}
+    localStorage.setItem("token", token);
+    localStorage.setItem("name", username);
+    alert("Login successful!");
+    onLogin();
+    navigate("/");
+  } catch (err) {
+    console.error(err);
+    alert("Login failed");
+  }
+};
 
-  };
 
   return (
     <div className="center-wrapper">

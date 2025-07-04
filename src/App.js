@@ -30,7 +30,12 @@ function App() {
             path="/login"
             element={
               isLoggedIn ? (
-                <Navigate to="/" />
+             <Navbar
+  isLoggedIn={isLoggedIn}
+  setIsLoggedIn={setIsLoggedIn}
+  userName={localStorage.getItem("name")}
+/>
+
               ) : (
                 <LoginPage
                   onLogin={() => {
