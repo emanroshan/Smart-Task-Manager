@@ -4,15 +4,13 @@ const auth = require("../middleware/auth");
 
 const router = express.Router();
 
-// Get all tasks for logged-in user
+// Get all tasks 
 router.get("/", auth, async (req, res) => {
   const tasks = await Task.find({ userId: req.user.id });
   res.json(tasks);
 });
 
-
-
-
+// Add a task
 router.post("/", auth, async (req, res) => {
   const { title, category, deadline } = req.body;
 
@@ -21,7 +19,7 @@ router.post("/", auth, async (req, res) => {
   }
 
   const newTask = new Task({
-    userId: req.user.id, // <--- this MUST be here
+    userId: req.user.id, 
     title,
     category,
     deadline,

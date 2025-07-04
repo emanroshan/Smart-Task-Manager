@@ -16,12 +16,12 @@ app.use((req, res, next) => {
 });
 
 mongoose.connect("mongodb+srv://imannroshan458:12345@cluster0.a6ekyvn.mongodb.net/")
-  .then(() => console.log("✅ MongoDB connected"))
-  .catch(err => console.error("❌ MongoDB connection error:", err));
+  .then(() => console.log("MongoDB connected"))
+  .catch(err => console.error("MongoDB connection error:", err));
 
 
 app.use("/api/auth", authRoutes);
 app.use("/api/tasks", taskRoutes);
 
 const PORT = 5000;
-app.listen(PORT, () => console.log(`🚀 API running on port ${PORT}`));
+app.listen(PORT, () => console.log(`API running on port ${PORT}`));

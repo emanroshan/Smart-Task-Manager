@@ -6,6 +6,7 @@ const User = require("../models/user");
 const router = express.Router();
 const SECRET = "your_secret_key_here"; 
 
+// Register
 router.post("/register", async (req, res) => {
   const { username, email, password } = req.body;
 
