@@ -22,7 +22,7 @@ A full-stack productivity app to create, update, and manage tasks with deadlines
 
 ---
 
-## ⚙️ Tech Stack
+## Tech Stack
 
 **Frontend**
 - React
@@ -40,7 +40,7 @@ A full-stack productivity app to create, update, and manage tasks with deadlines
 
 ## Setup Instructions
 
-#### 1. Backend
+### Backend
 
 1. Navigate to the backend folder: cd backend
 2. Install dependencies
@@ -48,7 +48,7 @@ A full-stack productivity app to create, update, and manage tasks with deadlines
 
 ### The server will run on **http://localhost:5000**
 
-### 2️⃣ Frontend
+### Frontend
 
 1. Navigate to the frontend folder: cd src
 2. Install dependencies
