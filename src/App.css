@@ -1,0 +1,67 @@
+.App {
+  text-align: center;
+}
+
+.App-logo {
+  height: 40vmin;
+  pointer-events: none;
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  .App-logo {
+    animation: App-logo-spin infinite 20s linear;
+  }
+}
+.App {
+  font-family: Arial, sans-serif;
+  padding: 20px;
+}
+h1 {
+  color: #333;
+}
+.task-form, .filters {
+  margin-bottom: 20px;
+}
+.task-form input, .task-form select, .filters select, .filters input {
+  margin-right: 5px;
+}
+ul.task-list {
+  list-style-type: none;
+  padding: 0;
+}
+ul.task-list li {
+  border: 1px solid #ddd;
+  margin: 5px 0;
+  padding: 10px;
+}
+.completed {
+  text-decoration: line-through;
+  color: gray;
+}
+button {
+  margin-right: 5px;
+}
+
+.App-header {
+  background-color: #282c34;
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  font-size: calc(10px + 2vmin);
+  color: white;
+}
+
+.App-link {
+  color: #61dafb;
+}
+
+@keyframes App-logo-spin {
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(360deg);
+  }
+}
