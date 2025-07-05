@@ -4,22 +4,35 @@ function TaskForm({ addTask }) {
   const [title, setTitle] = useState("");
   const [category, setCategory] = useState("Work");
   const [deadline, setDeadline] = useState("");
+  const [error, setError] = useState("");
 
-  const handleSubmit = async (e) => {
-    e.preventDefault();
+const handleSubmit = async (e) => {
+  e.preventDefault();
 
-    const task = {
-      title,
-      category,
-      deadline,
-    };
+  const task = {
+    title,
+    category,
+    deadline,
+  };
 
+  try {
     await addTask(task);
 
     setTitle("");
     setDeadline("");
     setCategory("Work");
-  };
+    setError("");
+  } catch (err) {
+    console.error("Error adding task:", err);
+    const errorMessage = err.response?.data?.message || "Failed to add task.";
+    setError(errorMessage);
+
+    setTimeout(() => {
+      setError("");
+    }, 2500);
+  }
+};
+
 
   return (
     <form className="task-form" onSubmit={handleSubmit}>
@@ -49,6 +62,11 @@ function TaskForm({ addTask }) {
           value={deadline}
           onChange={(e) => setDeadline(e.target.value)}
         />
+        {error && (
+          <div style={{ color: "red", marginTop: "4px" }}>
+            {error}
+          </div>
+        )}
       </div>
 
       <button type="submit">Add Task</button>

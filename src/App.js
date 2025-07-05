@@ -23,19 +23,18 @@ function App() {
 
   return (
     <Router>
-      <Navbar isLoggedIn={isLoggedIn} setIsLoggedIn={setIsLoggedIn} userName={userName} />
+      <Navbar
+        isLoggedIn={isLoggedIn}
+        setIsLoggedIn={setIsLoggedIn}
+        userName={userName}
+      />
       <div className="container">
         <Routes>
           <Route
             path="/login"
             element={
               isLoggedIn ? (
-             <Navbar
-  isLoggedIn={isLoggedIn}
-  setIsLoggedIn={setIsLoggedIn}
-  userName={localStorage.getItem("name")}
-/>
-
+                <Navigate to="/" />
               ) : (
                 <LoginPage
                   onLogin={() => {

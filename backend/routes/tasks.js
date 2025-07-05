@@ -14,12 +14,25 @@ router.get("/", auth, async (req, res) => {
 router.post("/", auth, async (req, res) => {
   const { title, category, deadline } = req.body;
 
-  if (!title) {
-    return res.status(400).json({ message: "Title is required." });
+  if (!title || !deadline) {
+    return res.status(400).json({ message: "Title and Deadline is required." });
+  }
+
+  const existingTask = await Task.findOne({
+    userId: req.user.id,
+    title: { $regex: `^${title}$`, $options: "i" },
+    category,
+    deadline
+  });
+
+  if (existingTask) {
+    return res
+      .status(400)
+      .json({ message: "A task with the same title, category, and deadline already exists." });
   }
 
   const newTask = new Task({
-    userId: req.user.id, 
+    userId: req.user.id,
     title,
     category,
     deadline,
@@ -30,6 +43,7 @@ router.post("/", auth, async (req, res) => {
 
   res.status(201).json(newTask);
 });
+
 
 // Update a task
 router.put("/:id", auth, async (req, res) => {

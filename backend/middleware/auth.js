@@ -3,10 +3,9 @@ const SECRET = "your_secret_key_here";
 
 module.exports = function (req, res, next) {
   const header = req.headers.authorization;
-  console.log("HEADER:", header);
-
+ 
   if (!header) {
-    console.log("No Authorization header!");
+ 
     return res.status(401).json({ message: "No token provided" });
   }
 
